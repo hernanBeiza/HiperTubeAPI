@@ -17,6 +17,18 @@ class UsuarioController
         $this->logger->info(__CLASS__.":".__FUNCTION__."();");
 	}
 
+ 	public function obtener()
+ 	{
+        $this->logger->info(__CLASS__.":".__FUNCTION__."();");	   
+	    list($result,$usuarios,$mensaje) = $this->c->UsuarioDAO->obtener();
+    	if($result){
+	    	$data = array('result' => $result, 'usuarios' => $usuarios);
+		} else {
+		    $data = array('result' => $result, 'errores' => $mensaje);
+		}
+	    return $data;
+ 	}
+
 	public function guardar($uuid)
 	{
         $this->logger->info(__CLASS__.":".__FUNCTION__."();");
@@ -30,7 +42,6 @@ class UsuarioController
 	        $errores .= "\nuuid no recibido";        
 	    }
 		if($enviar){	
-		    $this->logger->info("Guardar");
 		    $model = new UsuarioModel($this->logger);
 		    $model->setUUID($uuid);
 		    list($result,$mensaje) = $this->c->UsuarioDAO->guardar($model);
@@ -45,5 +56,6 @@ class UsuarioController
 
 	    return $data;
  	}
+
 }
 ?>

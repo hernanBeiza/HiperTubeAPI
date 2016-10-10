@@ -6,7 +6,7 @@ class FavoritoModel
     private $logger;
 
     private $uuid;
-    private $videoid;
+    private $idvideo;
     private $nombre;
     private $descripcion;
     private $miniatura;
@@ -34,12 +34,12 @@ class FavoritoModel
         return $this->uuid;
     }
 
-    public function setVideoID ($videoid){
-        $this->videoid = $videoid;
+    public function setIDVideo ($idvideo){
+        $this->idvideo = $idvideo;
     }
 
-    public function getVideoID (){
-        return $this->videoid;
+    public function getIDVideo (){
+        return $this->idvideo;
     }
 
 
@@ -79,7 +79,7 @@ class FavoritoModel
         */
         $yo = [
             'uuid' => $this->uuid,
-            'videoid' => $this->videoid,
+            'idvideo' => $this->idvideo,
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
             'miniatura' => $this->miniatura

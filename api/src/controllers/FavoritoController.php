@@ -58,7 +58,7 @@ class FavoritoController
 		    $this->logger->info("enviar");
 		    $model = new FavoritoModel($this->logger);
 		    $model->setUUID($uuid);
-		    $model->setVideoID($videoid);
+		    $model->setIDVideo($videoid);
 		    $model->setNombre($nombre);
 		    $model->setDescripcion($descripcion);
 		    $model->setMiniatura($miniatura);
@@ -91,15 +91,15 @@ class FavoritoController
 	    }
 
 	    if($enviar){	
-	    	$mensaje = "Datos recibidos";
 	    	$favoritos = $this->c->FavoritoDAO->obtener($uuid);
-	    	/*
-	    	foreach ($favoritos as $favorito) {
-    		    //$this->logger->info("uuid-> ".$favorito->toString());
-				$this->logger->info("uuid-> ".$favorito);   
-		    }
-			*/
-		    $data = array('result' => $enviar, 'mensaje' => $mensaje, 'favoritos' => $favoritos);
+	    	if (count($favoritos)>0) {
+				$result = true;
+		    	$mensaje = "Aquí están tus favoritos :)";
+	    	} else {
+				$result = false;
+		    	$mensaje = "No tienes favoritos :(";
+	    	}
+		    $data = array('result' => $result, 'mensaje' => $mensaje, 'favoritos' => $favoritos);
 		} else {
 		    $data = array('result' => $enviar, 'errores' => $errores);
 		}

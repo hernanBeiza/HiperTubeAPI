@@ -39,9 +39,18 @@ $app->get('/[{name}]', function ($request, $response, $args) {
 //http://stackoverflow.com/questions/32668186/
 
 // Usuario
+// Obtener
+$app->get("/usuarios/", function ($request, $response, $args) {
+    $this->logger->info("get /usuarios/");
+    $data = $this->UsuarioController->obtener();
+    return $response->withStatus(200)
+        ->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($data));
+});
+
 // Guardar
-$app->post("/uuid/guardar/", function ($request, $response, $args) {
-    $this->logger->info("uuid/guardar/");
+$app->post("/usuarios/", function ($request, $response, $args) {
+    $this->logger->info("post /usuarios/");
     $allPostPutVars = $request->getParsedBody();
     $uuid = $allPostPutVars["uuid"];
     $data = $this->UsuarioController->guardar($uuid);
@@ -52,9 +61,8 @@ $app->post("/uuid/guardar/", function ($request, $response, $args) {
 
 // Favoritos
 // Obtener Favoritos
-$app->get('/obtener/[{uuid}]', function ($request, $response, $args) {
+$app->get('/favoritos/[{uuid}]', function ($request, $response, $args) {
     $this->logger->info("'/obtener/'");
-
     /*
     $allGETVARS = $request->getQueryParams();
     $uuid = $allGETVARS["uuid"];
@@ -64,15 +72,14 @@ $app->get('/obtener/[{uuid}]', function ($request, $response, $args) {
         $this->logger->info($key."->".$param);
     } 
     */  
-
     $uuid = $request->getAttribute('uuid');
     $data = $favoritoController = $this->FavoritoController->obtener($uuid);        
     return $response->withStatus(200)
         ->withHeader('Content-Type', 'application/json')
         ->write(json_encode($data));
 });
-// Guardar
-$app->post('/guardar/[{uuid}]', function ($request, $response, $args) {
+// Guardar favorito según el uuid
+$app->post('/favoritos/[{uuid}]', function ($request, $response, $args) {
     $this->logger->info("'/guardar/'");
     //POST or PUT
     //$this->logger->info($request->getBody());
