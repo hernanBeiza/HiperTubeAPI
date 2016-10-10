@@ -8,13 +8,19 @@ if (PHP_SAPI == 'cli-server') {
         return false;
     }
 }
-
-require __DIR__ . '/../vendor/autoload.php';
+// Ubicación Projecto
+$rootProject = '/home/hb/classicbeiza.cl/hipertube/api';
+// Ubicación Librería
+require '/usr/local/Slim/vendor/autoload.php';
+//require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
 // Instantiate the app
-$settings = require __DIR__ . '/../src/settings.php';
+
+//$settings = require __DIR__ . '/../src/settings.php';
+$settings = require $rootProject . '/src/settings.php';
+
 $app = new \Slim\App($settings);
 
 // DAOs
