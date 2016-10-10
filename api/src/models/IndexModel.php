@@ -3,13 +3,17 @@ namespace App\Model;
 
 class IndexModel
 {
-    function __construct()
-    {
+	private $logger;
 
-    }
+    public function __construct($logger)
+    {
+        $this->logger = $logger;	
+	    $this->logger->info("IndexModel: __construct");
+	}
+
     public function obtener()
     {
-    	return "hola, soy IndexModel";    	
+    	return "Y yo soy IndexModel";    	
     }
 }
 ?>

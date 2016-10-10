@@ -17,11 +17,20 @@ session_start();
 $settings = require __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
 
+// DAOs
+require __DIR__ . '/../src/daos/DBDAO.php';
+require __DIR__ . '/../src/daos/UsuarioDAO.php';
+require __DIR__ . '/../src/daos/FavoritoDAO.php';
+
 // Models
 require __DIR__ . '/../src/models/IndexModel.php';
+require __DIR__ . '/../src/models/UsuarioModel.php';
+require __DIR__ . '/../src/models/FavoritoModel.php';
 
 // Controladores
 require __DIR__ . '/../src/controllers/IndexController.php';
+require __DIR__ . '/../src/controllers/UsuarioController.php';
+require __DIR__ . '/../src/controllers/FavoritoController.php';
 
 // Set up dependencies
 require __DIR__ . '/../src/dependencies.php';

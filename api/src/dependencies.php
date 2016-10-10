@@ -18,7 +18,32 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+// DAOs
+$container['UsuarioDAO'] = function ($c) {
+    return new \App\DAO\UsuarioDAO($c);
+};
+$container['FavoritoDAO'] = function ($c) {
+    return new \App\DAO\FavoritoDAO($c);
+};
+
+// Models
+$container['UsuarioModel'] = function ($c) {
+    return new \App\Model\UsuarioModel($c->get('logger'));
+};
+$container['FavoritoModel'] = function ($c) {
+    return new \App\Model\FavoritoModel($c->get('logger'));
+};
+$container['IndexModel'] = function ($c) {
+    return new \App\Model\IndexModel($c->get('logger'));
+};
+
 // Controllers
+$container['FavoritoController'] = function ($c) {
+    return new \App\Controllers\FavoritoController($c);
+};
+$container['UsuarioController'] = function ($c) {
+    return new \App\Controllers\UsuarioController($c);
+};
 $container['IndexController'] = function ($c) {
-    return new \App\Controller\IndexController($c->get('logger'));
+    return new \App\Controllers\IndexController($c->get('logger'),$c);
 };

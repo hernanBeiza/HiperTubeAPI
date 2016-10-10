@@ -1,5 +1,19 @@
 <?php
 // Routes
+$app->get('/', function ($request, $response, $args) {
+    // Sample log message
+    $this->logger->info("Slim-Skeleton '/' route");
+    $dato = $this->IndexController->obtener();
+
+    // Render index view
+    //return $this->renderer->render($response, 'index.phtml', $args);
+    $data = array('saludo' =>$dato);
+    return $response->withStatus(200)
+        ->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($data));
+});
+
+/*
 $app->get('/[{name}]', function ($request, $response, $args) {
     // Sample log message
     $this->logger->info("Slim-Skeleton '/' route");
@@ -13,21 +27,99 @@ $app->get('/[{name}]', function ($request, $response, $args) {
     // Render index view
     //return $this->renderer->render($response, 'index.phtml', $args);
     
-    /*
-    $indexController = new IndexController();
-    $info = $indexController->obtener();
-    $this->logger->info($info);
-    */
-
-    $data = array('nombre' => $name, 'age' => 29,'info' =>$dato);
-    foreach ($data as $key => $value) {
-        $this->logger->info($key." ".$value);
-    }
+    $data = array('nombre' => $name, 'age' => 29,'saludo' =>$dato);
 
     return $response->withStatus(200)
         ->withHeader('Content-Type', 'application/json')
         ->write(json_encode($data));
 });
+*/
+
+//http://docs.slimframework.com/request/body/slim-3-how-to-get-all-get-put-post-variables
+//http://stackoverflow.com/questions/32668186/
+
+// Usuario
+// Guardar
+$app->post("/uuid/guardar/", function ($request, $response, $args) {
+    $this->logger->info("uuid/guardar/");
+    $allPostPutVars = $request->getParsedBody();
+    $uuid = $allPostPutVars["uuid"];
+    $data = $this->UsuarioController->guardar($uuid);
+    return $response->withStatus(200)
+        ->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($data));
+});
+
+// Favoritos
+// Obtener Favoritos
+$app->get('/obtener/[{uuid}]', function ($request, $response, $args) {
+    $this->logger->info("'/obtener/'");
+
+    /*
+    $allGETVARS = $request->getQueryParams();
+    $uuid = $allGETVARS["uuid"];
+    $videoid = $allGETVARS["videoid"];
+    foreach($allGetVars as $key => $param){
+       //GET parameters list
+        $this->logger->info($key."->".$param);
+    } 
+    */  
+
+    $uuid = $request->getAttribute('uuid');
+    $data = $favoritoController = $this->FavoritoController->obtener($uuid);        
+    return $response->withStatus(200)
+        ->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($data));
+});
+// Guardar
+$app->post('/guardar/[{uuid}]', function ($request, $response, $args) {
+    $this->logger->info("'/guardar/'");
+    //POST or PUT
+    //$this->logger->info($request->getBody());
+    /*
+    foreach($allPostPutVars as $key => $param){
+        //POST or PUT parameters list
+        $this->logger->info($key."->".$param);
+    }
+    */
+    $allPostPutVars = $request->getParsedBody();
+    /*
+    foreach($allPostPutVars as $key => $param){
+        //POST or PUT parameters list
+        $this->logger->info($key."->".$param);
+    }
+    */
+    
+    $uuid = $allPostPutVars["uuid"];
+    $videoid = $allPostPutVars["videoid"];
+    $nombre = $allPostPutVars["nombre"];
+    $descripcion = $allPostPutVars["descripcion"];
+    $miniatura = $allPostPutVars["miniatura"];
+
+    $data = $favoritoController = $this->FavoritoController->guardar($uuid,$videoid,$nombre,$descripcion,$miniatura);
+        
+    return $response->withStatus(200)
+        ->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($data));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 $app->get('/myroute/[{varname}]', function() use ($app) {
